@@ -15,7 +15,8 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 
-properties = json.load(open('properties.json'))
+dir_path = os.path.dirname(os.path.realpath(__file__))
+properties = json.load(open(dir_path+os.path.sep+'properties.json'))
 
 @client.event
 async def on_ready():
