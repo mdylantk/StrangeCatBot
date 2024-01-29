@@ -21,7 +21,6 @@ properties = json.load(open('properties.json'))
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
     await client.change_presence(activity=discord.CustomActivity('*being a lazy cat*'))
-    print(properties)
 
 @client.event
 async def on_message(message):
