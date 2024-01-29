@@ -12,8 +12,6 @@ errors = ["Meow is confused. {}", "Mew is confused. {}", "*Rolls around.* {}"]
 picks_actions = ["*paws* `{}`", "Mew what about `{}`", "Meow picks `{}`",
                  "*nibbles `{}`*"]
 
-def get_term(key):
-  return ""
 
 def get_greeting():
   return random.choice(greetings)
@@ -27,6 +25,11 @@ def get_fact():
   request_responce = requests.get("https://catfact.ninja/fact")
   data = json.loads(request_responce.text)
   return "meow `" + data["fact"] + "`"
+
+def get_joke():
+  request_responce = requests.get("https://official-joke-api.appspot.com/random_joke")
+  data = json.loads(request_responce.text)
+  return "meow " + data["setup"] + " || " + data["punchline"] + "||"
 
 def get_error(error_message = "Something broke."):
   return random.choice(errors).format(error_message)
