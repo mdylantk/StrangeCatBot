@@ -16,7 +16,25 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-properties = json.load(open(dir_path+os.path.sep+'properties.json'))
+#default_properties = json.load(open(dir_path+os.path.sep+'properties.json'))
+#if os.path.isfile("properties.json"):
+#  properties = json.load(open(dir_path+os.path.sep+'properties.json'))
+
+def load_json(path):
+  data = {}
+  with open(path) as file :
+    data = json.load(file)
+    file.close()
+  return data
+
+properties = load_json(dir_path+os.path.sep+'defaultProperties.json')
+if os.path.isfile(dir_path+os.path.sep+'properties.json'):
+  properties_changes = load_json(dir_path+os.path.sep+'properties.json')
+  properties.extends(properties_changes)
+
+print(properties)
+print("")
+print(os.path.isfile(dir_path+os.path.sep+'properties.json'))
 
 @client.event
 async def on_ready():
@@ -33,8 +51,8 @@ async def on_message(message):
 try:
   token = os.getenv("TOKEN") or ""
   if token == "":
-    if properties["defaults"]["key"] != "":
-      token = properties["defaults"]["key"]
+    if properties["discord"]["key"] != "":
+      token = properties["discord"]["key"]
     else:
       raise Exception("Please add your token to the Secrets pane.")
   client.run(token)
