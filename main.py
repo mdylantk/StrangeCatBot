@@ -36,10 +36,6 @@ def get_property(property_group, property_name):
       return properties[1][property_group][property_name]
   return properties[0][property_group][property_name]
 
-print(properties)
-print("")
-print(os.path.isfile(dir_path+os.path.sep+'properties.json'))
-
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
