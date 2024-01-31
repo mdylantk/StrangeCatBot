@@ -16,9 +16,6 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-#default_properties = json.load(open(dir_path+os.path.sep+'properties.json'))
-#if os.path.isfile("properties.json"):
-#  properties = json.load(open(dir_path+os.path.sep+'properties.json'))
 
 def load_json(path):
   data = {}
@@ -27,10 +24,17 @@ def load_json(path):
     file.close()
   return data
 
-properties = load_json(dir_path+os.path.sep+'defaultProperties.json')
+properties = [load_json(dir_path+os.path.sep+'defaultProperties.json'),{}]
 if os.path.isfile(dir_path+os.path.sep+'properties.json'):
   properties_changes = load_json(dir_path+os.path.sep+'properties.json')
-  properties.extends(properties_changes)
+  properties[1] = properties_changes
+  
+
+def get_property(property_group, property_name):
+  if property_group in properties[1]:
+    if property_name in properties[1][property_group]:
+      return properties[1][property_group][property_name]
+  return properties[0][property_group][property_name]
 
 print(properties)
 print("")
@@ -49,12 +53,9 @@ async def on_message(message):
 
 
 try:
-  token = os.getenv("TOKEN") or ""
+  token = os.getenv("TOKEN") or get_property("discord", "key")
   if token == "":
-    if properties["discord"]["key"] != "":
-      token = properties["discord"]["key"]
-    else:
-      raise Exception("Please add your token to the Secrets pane.")
+    raise Exception("Please add your token to the Secrets pane or properties file.")
   client.run(token)
 except discord.HTTPException as e:
     if e.status == 429:
