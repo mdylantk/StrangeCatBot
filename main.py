@@ -44,6 +44,7 @@ def load_properties():
   #update the properties of other files that depends on it
   if "debug" in properties:
     debugHandler.properties = properties["debug"]
+  return properties
   
 
 def get_property(property_group, property_name):
@@ -75,7 +76,7 @@ async def on_message(message):
 
 ###Setup### run function and set up states
 
-load_properties()
+properties = load_properties()
 
 
 try:
