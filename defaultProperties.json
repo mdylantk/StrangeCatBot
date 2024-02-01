@@ -3,6 +3,7 @@
     "key":""
   },
   "debug":{
+    "enable": false,
     "show_messages":false
   }
 }
