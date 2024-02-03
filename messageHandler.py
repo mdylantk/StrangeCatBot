@@ -37,9 +37,10 @@ async def handleMessage(message):
     message_data["arguments"] = split_message[1:] 
 
 
-  #print(message_data)
-
-  if message_data["command"] == "hello":
+  if (message_data["command"] == "hello" or 
+      message_data["command"] == "hi" or
+      message_data["command"] == "hey"
+     ):
     await message.channel.send(responses.get_greeting())
   elif message_data["command"] == "quote":
     await message.channel.send(responses.get_quote())

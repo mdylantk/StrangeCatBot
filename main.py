@@ -6,6 +6,7 @@ import json
 import messageHandler
 import debugHandler
 import personalityHandler
+import responses
 
 
 ###Init Importaint Variables###
@@ -78,6 +79,7 @@ async def on_message(message):
 
 properties = load_properties()
 
+responses.dialog = load_json(dir_path+os.path.sep+'dialog.json')
 
 try:
   token = os.getenv("TOKEN") or get_property("discord", "key")

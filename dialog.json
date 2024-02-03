@@ -1,0 +1,43 @@
+{
+  "greetings":[
+    "Meow!",
+    "Hellow",
+    "Mew hi!",
+    "Meow mew",
+    "*lays on side* Meow",
+    "*purrs*"
+  ],
+  "help":[],
+  "defaultActions":[],
+  "quoteActions":[
+    "*knocks a book off a shelf. The book opens to a page with the following quote:* ` {quote} -{author}`",
+    "*Lays on an open book exposing the quote:* ` {quote} -{author}`"
+  ],
+  "jokeActions":[],
+  "factActions":[],
+  "errors":[
+    "Meow is confused. {error}",
+    "Mew is confused. {error}",
+    "*Rolls around.* {error}"
+  ],
+  "picksActions":[
+    "*paws* `{option}`",
+    "Mew what about `{option}`",
+    "Meow picks `{option}`",
+    "*nibbles `{option}`*"
+  ],
+  "prefix":[
+    "meows", 
+    "*paws*",
+    "*looks cute*",
+    "*nibbles*",
+    "*purrs*"
+  ],
+  "suffix":[
+    "",
+    "*rolls around*",
+    "*rolls on side*",
+    "*plays with a lose string*",
+    "*nuzzles*"
+  ]
+}
