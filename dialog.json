@@ -5,13 +5,18 @@
     "Mew hi!",
     "Meow mew",
     "*lays on side* Meow",
-    "*purrs*"
+    "*purrs*",
+    "Meow meow"
   ],
   "help":[],
   "defaultActions":[],
   "quoteActions":[
     "*knocks a book off a shelf. The book opens to a page with the following quote:* ` {quote} -{author}`",
-    "*Lays on an open book exposing the quote:* ` {quote} -{author}`"
+    "*Lays on an open book exposing the quote:* ` {quote} -{author}`",
+    "*Nibble a page with the following quote:* ` {quote} -{author}`",
+    "*Nuzzles a page with the following quote:* ` {quote} -{author}`",
+    "*Paws the quote, ` {quote} -{author}`, of an open book",
+    "*Nuzzles the quote, ` {quote} -{author}`, of an open book"
   ],
   "jokeActions":[],
   "factActions":[],
@@ -24,20 +29,26 @@
     "*paws* `{option}`",
     "Mew what about `{option}`",
     "Meow picks `{option}`",
-    "*nibbles `{option}`*"
+    "*nibbles `{option}`*",
+    "*lays on `{option}`*",
+    "*paws at `{option}`*",
+    "*licks `{option}`*",
+    "*pick up `{option}` and runs away*",
+    "*rolls on `{option}`*",
+    "*rubs against `{option}`*"
   ],
   "prefix":[
     "meows", 
     "*paws*",
     "*looks cute*",
     "*nibbles*",
-    "*purrs*"
+    "*purrs*",
+    "*nuzzles*"
   ],
   "suffix":[
     "",
     "*rolls around*",
     "*rolls on side*",
-    "*plays with a lose string*",
-    "*nuzzles*"
+    "*plays with a lose string*"
   ]
 }
