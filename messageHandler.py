@@ -11,27 +11,28 @@ async def handleMessage(message):
   #which is usally done last if used.
   #command_prefix is being stored incase the triggeing word would reflect bot responce
   message_data = {"command_prefix":"","command":"","message":"","arguments":[]}
-  msg = message.content
+  #handle the message in lowercase for now. 
+  msg = message.content.lower()
   #below may be better with a for loop from a list of vaild prefixs
-  if (message.content.startswith('meow') or
-    message.content.startswith('mew')
+  if (msg.startswith('meow') or
+    msg.startswith('mew')
   ):
-    split_message = message.content.split(" ")
+    split_message = msg.split(" ")
     message_data["command_prefix"] = split_message[0]
     message_data["command"] = split_message[1]
-    message_data["message"] = message.content.split(
+    message_data["message"] = msg.split(
       message_data["command_prefix"] + " " + message_data["command"]
     )[1]
     message_data["arguments"] = split_message[2:] 
   #arguments will be formated incorrectly when handling any type of string
   #responces after this parse. the commands need to reformat it in such cases
 
-  elif message.content.startswith('$'):
+  elif msg.startswith('$'):
     message_data["command_prefix"] = "$"
-    message_data["message"] = message.content.split("$")[1]
+    message_data["message"] = msg.split("$")[1]
     split_message = message_data["message"].split(" ")
     message_data["command"] = message_data["message"].split(" ")[0]
-    message_data["message"] = message.content.split(
+    message_data["message"] = msg.split(
       message_data["command_prefix"] + message_data["command"] 
     )[1]
     message_data["arguments"] = split_message[1:] 

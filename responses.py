@@ -54,7 +54,9 @@ def pick_word(words):
     return get_error("The choices need to be seprated by commas `,`.")
 
 def get_cat_picture():
-  responce = "https://cataas.com/cat/cute"
+  request_responce = requests.get("https://cataas.com/cat?json=true")
+  data = json.loads(request_responce.text)
+  responce = "https://cataas.com/cat/"+ data["_id"]
   return responce
 
 #this is for ref sources. may need a better way to keep track of it.
