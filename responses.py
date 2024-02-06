@@ -52,3 +52,23 @@ def pick_word(words):
     return responce
   else:
     return get_error("The choices need to be seprated by commas `,`.")
+
+def get_cat_picture():
+  responce = "https://cataas.com/cat/cute"
+  return responce
+
+#this is for ref sources. may need a better way to keep track of it.
+def get_info():
+  responce =  "{prefix} {intro}. ||```{data}```|| ".format(
+    prefix = random.choice(dialog["prefix"]),
+    intro = "I am a random cat bot with random features",
+    data = (
+      "bot source: https://github.com/mdylantk/StrangeCatBot \n" +
+      "api sources: \n" +
+      "quote: https://api.quotable.io/quotes/random \n" +
+      "fact: https://catfact.ninja/fact \n" +
+      "joke: https://official-joke-api.appspot.com/random_joke \n" +
+      "picture: https://cataas.com/cat/cute \n"
+    )
+  )
+  return responce

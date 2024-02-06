@@ -47,8 +47,18 @@ async def handleMessage(message):
   elif message_data["command"] == "pick":
     await message.channel.send(responses.pick_word(message_data["message"]))
   elif message_data["command"] == "roll":
-    await message.channel.send(diceHandler.roll_dice(message_data["message"])["message"])
+    await message.channel.send(
+      diceHandler.roll_dice(message_data["message"])["message"]
+    )
   elif message_data["command"] == "fact":
     await message.channel.send(responses.get_fact())
   elif message_data["command"] == "joke":
     await message.channel.send(responses.get_joke())
+  elif (message_data["command"] == "picture" or
+        message_data["command"] == "pic" or
+        message_data["command"] == "photo" or
+        message_data["command"] == "photograph"
+       ):
+    await message.channel.send(responses.get_cat_picture())
+  elif message_data["command"] == "info":
+    await message.channel.send(responses.get_info())
