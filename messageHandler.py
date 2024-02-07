@@ -19,7 +19,8 @@ async def handleMessage(message):
   ):
     split_message = msg.split(" ")
     message_data["command_prefix"] = split_message[0]
-    message_data["command"] = split_message[1]
+    if 1 < len(split_message):
+      message_data["command"] = split_message[1]
     message_data["message"] = msg.split(
       message_data["command_prefix"] + " " + message_data["command"]
     )[1]
@@ -37,10 +38,10 @@ async def handleMessage(message):
     )[1]
     message_data["arguments"] = split_message[1:] 
 
-
   if (message_data["command"] == "hello" or 
       message_data["command"] == "hi" or
-      message_data["command"] == "hey"
+      message_data["command"] == "hey" or
+      message_data["command"] == "meows"
      ):
     await message.channel.send(responses.get_greeting())
   elif message_data["command"] == "quote":
@@ -63,3 +64,10 @@ async def handleMessage(message):
     await message.channel.send(responses.get_cat_picture())
   elif message_data["command"] == "info":
     await message.channel.send(responses.get_info())
+
+  elif message_data["command_prefix"] == "meows":
+    await message.channel.send(responses.get_greeting())
+  else:
+    return False
+  #should return if the message was handled
+  return True
