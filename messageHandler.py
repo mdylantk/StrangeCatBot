@@ -21,13 +21,17 @@ async def handleMessage(message):
     message_data["command_prefix"] = split_message[0]
     if 1 < len(split_message):
       message_data["command"] = split_message[1]
-    message_data["message"] = msg.split(
-      message_data["command_prefix"] + " " + message_data["command"]
-    )[1]
-    message_data["arguments"] = split_message[2:] 
+      message_data["message"] = msg.split(
+        message_data["command_prefix"] + " " + message_data["command"]
+      )[1]
+      message_data["arguments"] = split_message[2:] 
   #arguments will be formated incorrectly when handling any type of string
   #responces after this parse. the commands need to reformat it in such cases
-
+    
+    #this is out of place, but here untill this logic get a rework
+    elif message_data["command_prefix"] == "meows":
+      await message.channel.send(responses.get_greeting())
+      return True
   elif msg.startswith('$'):
     message_data["command_prefix"] = "$"
     message_data["message"] = msg.split("$")[1]
@@ -38,6 +42,12 @@ async def handleMessage(message):
     )[1]
     message_data["arguments"] = split_message[1:] 
 
+  if message_data["command_prefix"] == "":
+    #there is currently a chance that there is none set
+    #so it cancel the logic since there no vaild format
+    #this also would need to change if anayling messages is added
+    return False
+  
   if (message_data["command"] == "hello" or 
       message_data["command"] == "hi" or
       message_data["command"] == "hey" or
@@ -64,9 +74,6 @@ async def handleMessage(message):
     await message.channel.send(responses.get_cat_picture())
   elif message_data["command"] == "info":
     await message.channel.send(responses.get_info())
-
-  elif message_data["command_prefix"] == "meows":
-    await message.channel.send(responses.get_greeting())
   else:
     return False
   #should return if the message was handled

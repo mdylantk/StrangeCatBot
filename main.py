@@ -74,7 +74,7 @@ async def update():
         personalityHandler.activity
       ))
       #print("activity was changed: " + str(new_activity))
-    await asyncio.sleep(1)
+    await asyncio.sleep(10)
     
   
 ###Event Hooks###
