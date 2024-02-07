@@ -27,11 +27,6 @@ async def handleMessage(message):
       message_data["arguments"] = split_message[2:] 
   #arguments will be formated incorrectly when handling any type of string
   #responces after this parse. the commands need to reformat it in such cases
-    
-    #this is out of place, but here untill this logic get a rework
-    elif message_data["command_prefix"] == "meows":
-      await message.channel.send(responses.get_greeting())
-      return True
   elif msg.startswith('$'):
     message_data["command_prefix"] = "$"
     message_data["message"] = msg.split("$")[1]
@@ -42,39 +37,49 @@ async def handleMessage(message):
     )[1]
     message_data["arguments"] = split_message[1:] 
 
-  if message_data["command_prefix"] == "":
-    #there is currently a chance that there is none set
-    #so it cancel the logic since there no vaild format
-    #this also would need to change if anayling messages is added
-    return False
   
-  if (message_data["command"] == "hello" or 
-      message_data["command"] == "hi" or
-      message_data["command"] == "hey" or
-      message_data["command"] == "meows"
-     ):
+  if message_data["command_prefix"] == "":
+    #currently not analying messages here, so this end the logic
+    #so the rest if the logic wont run and do odd things
+    return False
+  elif message_data["command_prefix"] == "meows":
     await message.channel.send(responses.get_greeting())
+    return True
+  else:
+    responce = handleCommands(message_data)
+    if responce != None:
+      await message.channel.send(responce)
+      return True
+    else:
+      return False
+
+def handleCommands(message_data):
+  return_value = None
+  if (message_data["command"] == "hello" or 
+    message_data["command"] == "hi" or
+    message_data["command"] == "hey" or
+    message_data["command"] == "meows"
+   ):
+    return_value = responses.get_greeting()
   elif message_data["command"] == "quote":
-    await message.channel.send(responses.get_quote())
+    return_value =responses.get_quote()
   elif message_data["command"] == "pick":
-    await message.channel.send(responses.pick_word(message_data["message"]))
+    return_value = responses.pick_word(message_data["message"])
   elif message_data["command"] == "roll":
-    await message.channel.send(
+    return_value = (
       diceHandler.roll_dice(message_data["message"])["message"]
     )
   elif message_data["command"] == "fact":
-    await message.channel.send(responses.get_fact())
+    return_value =responses.get_fact()
   elif message_data["command"] == "joke":
-    await message.channel.send(responses.get_joke())
+    return_value =responses.get_joke()
   elif (message_data["command"] == "picture" or
         message_data["command"] == "pic" or
         message_data["command"] == "photo" or
         message_data["command"] == "photograph"
-       ):
-    await message.channel.send(responses.get_cat_picture())
+      ):
+    return_value = responses.get_cat_picture()
   elif message_data["command"] == "info":
-    await message.channel.send(responses.get_info())
-  else:
-    return False
-  #should return if the message was handled
-  return True
+    return_value = responses.get_info()
+    
+  return return_value
