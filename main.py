@@ -74,7 +74,7 @@ async def update():
         personalityHandler.activity
       ))
       #print("activity was changed: " + str(new_activity))
-    await asyncio.sleep(10)
+    await asyncio.sleep(30)
     
   
 ###Event Hooks###
@@ -93,9 +93,16 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    if await messageHandler.handleMessage(message):
+    results = await messageHandler.handleMessage(message)
+    print(results)
+    if results["handled"]:
       personalityHandler.wake(True)
-
+      if "mood" in results:
+        personalityHandler.mood += results["mood"]
+        personalityHandler.wake(False)
+      else:
+        personalityHandler.energy -= 1
+        personalityHandler.wake(True)
 
 ###Setup### run function and set up states
 

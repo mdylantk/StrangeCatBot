@@ -74,3 +74,7 @@ def get_info():
     )
   )
   return responce
+
+def get_happy():
+  responce = random.choice(dialog["happy"])
+  return responce

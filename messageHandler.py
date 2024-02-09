@@ -10,7 +10,13 @@ async def handleMessage(message):
   #argument is an optional parcing of parameter in the message
   #which is usally done last if used.
   #command_prefix is being stored incase the triggeing word would reflect bot responce
-  message_data = {"command_prefix":"","command":"","message":"","arguments":[]}
+  message_data = {
+    "command_prefix":"",
+    "command":"",
+    "message":"",
+    "arguments":[],
+    "handled":False
+  }
   #handle the message in lowercase for now. 
   msg = message.content.lower()
   #below may be better with a for loop from a list of vaild prefixs
@@ -19,7 +25,7 @@ async def handleMessage(message):
   ):
     split_message = msg.split(" ")
     message_data["command_prefix"] = split_message[0]
-    if 1 < len(split_message):
+    if len(split_message) > 1:
       message_data["command"] = split_message[1]
       message_data["message"] = msg.split(
         message_data["command_prefix"] + " " + message_data["command"]
@@ -41,17 +47,19 @@ async def handleMessage(message):
   if message_data["command_prefix"] == "":
     #currently not analying messages here, so this end the logic
     #so the rest if the logic wont run and do odd things
-    return False
+    return message_data
   elif message_data["command_prefix"] == "meows":
     await message.channel.send(responses.get_greeting())
-    return True
+    message_data["handled"] = True
+    return message_data
   else:
     responce = handleCommands(message_data)
-    if responce != None:
+    if responce is not None:
       await message.channel.send(responce)
-      return True
+      message_data["handled"] = True
+      return message_data
     else:
-      return False
+      return message_data
 
 def handleCommands(message_data):
   return_value = None
@@ -81,5 +89,15 @@ def handleCommands(message_data):
     return_value = responses.get_cat_picture()
   elif message_data["command"] == "info":
     return_value = responses.get_info()
-    
+
+  elif message_data["command"] in [
+    "pets","*pets*","pet","*pet*"
+    "nuzzles","*nuzzles*",
+    "snuggles","*snuggles*",
+    "love", "loves",
+  ]:
+    message_data["mood"] = 1
+    return_value = responses.get_happy()
+  
+  message_data["response"] = return_value
   return return_value
