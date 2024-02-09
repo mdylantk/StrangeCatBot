@@ -91,7 +91,7 @@ def handleCommands(message_data):
     return_value = responses.get_info()
 
   elif message_data["command"] in [
-    "pets","*pets*","pet","*pet*"
+    "pets","*pets*","pet","*pet*",
     "nuzzles","*nuzzles*",
     "snuggles","*snuggles*",
     "love", "loves",
