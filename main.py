@@ -91,10 +91,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    global properties
     if message.author == client.user:
         return
     results = await messageHandler.handleMessage(message)
-    print(results)
+    if properties["debug"]["enable"] and properties["debug"]["show_messages"]:
+      print(results)
     if results["handled"]:
       personalityHandler.wake(True)
       if "mood" in results:
