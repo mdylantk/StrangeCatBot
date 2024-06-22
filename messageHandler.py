@@ -15,7 +15,8 @@ async def handleMessage(message):
     "command":"",
     "message":"",
     "arguments":[],
-    "handled":False
+    "handled":False,
+    "signals":[]
   }
   #handle the message in lowercase for now. 
   msg = message.content.lower()
@@ -98,6 +99,9 @@ def handleCommands(message_data):
   ]:
     message_data["mood"] = 1
     return_value = responses.get_happy()
+  elif message_data["command"] == "reload":
+    return_value = "Meow will try to rethink things"
+    message_data["signals"].append("reload")
   
   message_data["response"] = return_value
   return return_value

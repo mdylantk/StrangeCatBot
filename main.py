@@ -24,6 +24,12 @@ is_active = False
 properties = {}
 
 ###Function###
+def load_data():
+  global properties
+  print("loading data from json files")
+  properties = load_properties()
+  responses.dialog = load_json(dir_path+os.path.sep+'dialog.json')
+
 
 def load_json(path):
   data = {}
@@ -105,12 +111,14 @@ async def on_message(message):
       else:
         personalityHandler.energy -= 1
         personalityHandler.wake(True)
+    for signal in results["signals"]:
+      if signal == "reload":
+        load_data()
+    
 
 ###Setup### run function and set up states
 
-properties = load_properties()
-
-responses.dialog = load_json(dir_path+os.path.sep+'dialog.json')
+load_data()
 
 try:
   token = os.getenv("TOKEN") or get_property("discord", "key")
