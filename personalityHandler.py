@@ -4,6 +4,7 @@
 from math import remainder
 import random
 
+
 #print(random.randrange(1,10))
 
 #mood will be a range of -1 to 1 or -100 to 100
@@ -17,7 +18,7 @@ sleeping_time = 0
 #currectly selected activity. may be change to a ref or path
 state = []
 activity = "*being a lazy cat*"
-#activity_list is a placeholder
+#activity_list is a placeholder. should be stored in a json
 activity_list = {
   "sleep":"*is sleeping*",
   "nap":"*is taking a nap*",
@@ -100,7 +101,13 @@ def update(mood_mod=1,energy_mod=1,sleeping_time_mod=1):
     if random.randrange(0,100) + 1 <= sleeping_time:
       state.remove("nap")
 
-  return False
+  #decided to return the bot personailty data so main can save it on update
+  #it could fetch it, but I may do it later
+  data={
+      "mood":mood, "energy":energy, "sleeping time":sleeping_time, "state":state
+    }
+  return data
+
   #print("mood: " + str(mood))
   #print("energy: " + str(energy))
   #print("sleep: " + str(sleeping_time))

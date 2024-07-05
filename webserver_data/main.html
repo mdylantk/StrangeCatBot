@@ -1,0 +1,42 @@
+this is a test meow
+
+
+
+<p id="bot_stats">loading</p>
+<script>
+
+  async function getData() {
+    try {
+      const response = await fetch(
+        data_path,
+        {
+          method: 'GET',
+        },
+     );
+
+     if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+     return data;
+   } catch (error) {
+      console.log(error);
+    }
+  }
+
+  var data_path = "http://127.0.0.1:8000/webserver_data/Server_Data.json"
+
+  var timer = setInterval(function(){
+    getData().then(data => {
+      const preElement = document.getElementById('bot_stats');
+
+      preElement.style.fontSize = '18px';
+
+      preElement.innerHTML = JSON.stringify(data, null, 2);
+    });
+  },10000)
+  
+  //document.getElementById("bot_stats").innerHTML = data;
+</script>

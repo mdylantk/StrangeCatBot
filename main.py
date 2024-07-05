@@ -18,6 +18,8 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
+data_file_name = 'webserver_data'+os.path.sep+'Server_Data.json'
+
 #a shutoff switch. should only be true if bot is running
 is_active = False
 
@@ -37,6 +39,11 @@ def load_json(path):
     data = json.load(file)
     file.close()
   return data
+
+def save_json(path,data={}):
+  with open(path,"w") as file :
+    json.dump(data,file)
+    file.close()
   
 #making this logic a function incase a hot reload of this is needed at any point
 def load_properties():
@@ -73,7 +80,7 @@ def get_property(property_group, property_name):
 async def update():
   global is_active
   while is_active:
-    personalityHandler.update()
+    update_data = personalityHandler.update()
     new_activity = personalityHandler.update_activity()
     if new_activity != None:
       await client.change_presence(activity=discord.CustomActivity(
@@ -81,6 +88,10 @@ async def update():
       ))
       #print("activity was changed: " + str(new_activity))
     await asyncio.sleep(30)
+
+    #eaither can fetch data directly or use return value.
+    #may be ideal to try to save if there a change, but the update rate slow enough
+    save_json(dir_path+os.path.sep+data_file_name, update_data)
     
   
 ###Event Hooks###
